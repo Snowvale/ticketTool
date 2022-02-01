@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<title>Ticket Tool</title>
+<noscript>Please enable Javascript</noscript>
+<body style="background-color:gray;">
+<br>
+<h1 style="color:black;font-family:consolas;">Ticket Tool</h1><br>
+
+<!-- this form is for pasting cells from a spreadsheet -->
+
+<form style="color:black;font-family:consolas;">
+<fieldset>
+    <legend style="font-weight:bold;color:white;font-family:consolas;font-size:large;">Autofill Phone</legend>
+    <p>Copy cells from Excel and paste here</p>
+    <br>
+    <label for="input">Input:</label>
+    <input type="text" id="input" name="input" size="80"><br><br>
+
+    <p>Extension:<br>
+    <input type="radio" id="uaEx" name="extension" value="UA">
+    <label for="ua">UA</label><br>
+
+    <input type="radio" id="crimsonEx" name="extension" value="crimson">
+    <label for="crimson">Crimson</label><br><br>
+
+    <input type="reset" id="clear" name="clear">
+    <br><br><br>
+
+    <button onclick="copyForm()">Copy Info</button>
+    <br>
+</fieldset>
+</form>
+
+<br><br>
+
+<!-- parses input from the above form, formats into a response, then copies it to the clipboard -->
+
+<script>
+function copyForm()	{
+
+    var input = document.getElementById("input").value;
+
+    const inputArray = input.toString().split('\t');
+
+    let fname = inputArray[0];
+    let uname = inputArray[1];
+    let phonein = inputArray[2];
+
+    if (phonein.length == 10)	{
+	    var phone = "(" + phonein.charAt(0) + phonein.charAt(1) + phonein.charAt(2) + ")" + " " + phonein.charAt(3) + phonein.charAt(4) + phonein.charAt(5) + "-" + phonein.charAt(6) + phonein.charAt(7) + phonein.charAt(8) + phonein.charAt(9);
+	}
+    else if (phonein.length == 4)	{
+	    var phone = "8" + phonein;
+	}
+    else	{
+	    var phone = phonein;
+	}
+
+    var closer = document.getElementById("closer");
+
+    var extension;
+
+    if (document.getElementById("uaEx").checked)	{
+	    var extension = "@ua.edu";
+	}
+    else if (document.getElementById("crimsonEx").checked)	{
+	    var extension = "@crimson.ua.edu";
+	}
+    else	{
+	    var extension = "";
+	}
+
+    var response = "Per our phone conversation - Your request has been processed/resolved.  If you have any additional questions or concerns, please reply to this email for additional assistance. Thank you for your patience. ";
+
+    var fullResponse = response + closer.value + "User's Full Name: " + fname + "\n" + "myBama Username: " + uname + "\n\n" + "UA Email Address (@*ua.edu, @Crimson.ua.edu): " + uname + extension + "\n\n" + "Daytime Phone #: " + phone;
+    navigator.clipboard.writeText(fullResponse);
+
+}
+</script>
+
+<!-- this form is for manually typing information from the written forms -->
+
+<form style="color:black;font-family:consolas;">
+<fieldset>
+    <legend style="font-weight:bold;color:white;font-family:consolas;font-size:large;">Autofill In-Person</legend>
+    <p>Type inputs from written form</p>
+    <br>
+    <label for="fname2">Full name:</label>
+    <input type="text" id="fname2" name="fname2"><br>
+
+    <label for="uname2">Username:</label>
+    <input type="text" id="uname2" name="uname2"><br>
+
+    <label for="phone2">Phone:</label>
+    <input type="tel" id="phone2" name="phone2"><br><br>
+
+    <input type="radio" id="uaEx2" name="extension2" value="UA">
+    <label for="ua2">UA</label><br>
+
+    <input type="radio" id="crimsonEx2" name="extension2" value="crimson">
+    <label for="crimson2">Crimson</label><br>
+
+    <br>
+
+    <input type="reset" id="clear" name="clear">
+    <br><br><br>
+    <button onclick="copyForm2()">Copy Info</button>
+    <br>
+</fieldset>
+</form>
+
+<!-- parses input from the above form, formats into a response, then copies it to the clipboard -->
+
+<script>
+function copyForm2()	{
+    var fname = document.getElementById("fname2");
+    var uname = document.getElementById("uname2");
+    var phonein = document.getElementById("phone2").value;
+    var closer = document.getElementById("closer");
+
+    //var phonein = phone2.toString();
+
+    var extension;
+
+    if (phonein.length == 10)	{
+	    var phone = "(" + phonein.charAt(0) + phonein.charAt(1) + phonein.charAt(2) + ")" + " " + phonein.charAt(3) + phonein.charAt(4) + phonein.charAt(5) + "-" + phonein.charAt(6) + phonein.charAt(7) + phonein.charAt(8) + phonein.charAt(9);
+	}
+    else if (phonein.length == 4)	{
+	    var phone = "8" + phonein;
+	}
+    else	{
+	    var phone = phonein;
+	}
+
+    if (document.getElementById("uaEx2").checked)	{
+	    var extension = "@ua.edu";
+	}
+    else if (document.getElementById("crimsonEx2").checked)	{
+	    var extension = "@crimson.ua.edu";
+	}
+
+    var response = "Per your visit to the IT Service Desk - Your request has been processed/resolved.  If you have any additional questions or concerns, please reply to this email for additional assistance. Thank you for your patience. ";
+
+    var fullResponse = response + closer.value + "User's Full Name: " + fname.value + "\n" + "myBama Username: " + uname.value + "\n\n" + "UA Email Address (@*ua.edu, @Crimson.ua.edu): " + uname.value + extension + "\n\n" + "Daytime Phone #: " + phone;
+    navigator.clipboard.writeText(fullResponse);
+
+}
+</script>
+
+<br><br><br>
+
+<!-- the text for the autofill closer var -->
+
+<textarea style=display:none id="closer">
+
+
+IT Service Desk
+Office of Information Technology
+The University of Alabama
+125A Gordon Palmer Hall
+Box 870346
+Tuscaloosa, AL | Phone 205-348-5555 | Fax 205-348-5357
+_____________________________________________________________________________
+
+
+</textarea>
+
+<!-- this is the blank over the phone resolve in case it is needed -->
+
+<fieldset>
+<legend style="font-weight:bold;color:white;font-family:consolas;font-size:large;">Blank Responses</legend>
+<p style="color:black;font-family:consolas;">Phone</p>
+<textarea name='phoneResolve' type="text" name="paragraph_text" cols="80" rows="22" id="phoneResolve">
+Per our phone conversation - Your request has been processed/resolved.  If you have any additional questions or concerns, please reply to this email for additional assistance. Thank you for your patience.
+
+
+
+IT Service Desk
+Office of Information Technology
+The University of Alabama
+125A Gordon Palmer Hall
+Box 870346
+Tuscaloosa, AL | Phone 205-348-5555 | Fax 205-348-5357
+_____________________________________________________________________________
+
+
+User's Full Name:
+myBama Username:
+
+UA Email Address (@*ua.edu, @Crimson.ua.edu):
+
+Daytime Phone #:
+
+</textarea>
+
+<br>
+<button onclick="copyPR()">Copy Phone Resolve</button>
+
+<script>
+function copyPR()	{
+    // get the text field
+    var copyText = document.getElementById("phoneResolve");
+    // select the field's contents
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    // copy selection to clipboard
+    navigator.clipboard.writeText(copyText.value);
+}
+</script>
+
+<br><br>
+
+<!-- this is the blank in person relsolve in case it is needed -->
+
+<p style="color:black;font-family:consolas;">In-Person</p>
+<textarea name='inPersonResolve' type="text" name="paragraph_text" cols="80" rows="22" id="inPersonResolve">
+Per your visit to the IT Service Desk - Your request has been processed/resolved.  If you have any additional questions or concerns, please reply to this email for additional assistance. Thank you for your patience.
+
+
+
+IT Service Desk
+Office of Information Technology
+The University of Alabama
+125A Gordon Palmer Hall
+Box 870346
+Tuscaloosa, AL | Phone 205-348-5555 | Fax 205-348-5357
+_____________________________________________________________________________
+
+
+User's Full Name:
+myBama Username:
+
+UA Email Address (@*ua.edu, @Crimson.ua.edu):
+
+Daytime Phone #:
+
+</textarea>
+<br>
+<button onclick="copyIPR()">Copy In-Person Resolve</button>
+
+<script>
+function copyIPR()	{
+  // get the text field
+  var copyText = document.getElementById("inPersonResolve");
+  // select the field's contents
+  copyText.select();
+  copyText.setSelectionRange(0, 99999);
+   // copy selection to clipboard
+  navigator.clipboard.writeText(copyText.value);
+}
+</script>
+</fieldset>
+
+<br><br><br><br>
+</body>
+</html>
